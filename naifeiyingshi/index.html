@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奈菲影视-奈菲影视在线观看_影视资源推荐与片单导航</title>
+<meta name="description" content="奈菲影视是面向影视爱好者的资源推荐与片单导航页面，提供奈菲影视热门剧集、电影片单、分类检索与观看路径整理，帮助访问者快速找到想看的影视内容。">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1320'/%3E%3Cpath d='M24 18v28l20-14z' fill='%23e8b453'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#0d1320;
+  --ink-2:#161f31;
+  --ink-3:#1f2b40;
+  --gold:#e8b453;
+  --gold-soft:#f3d49a;
+  --paper:#f6f3ec;
+  --line:rgba(232,180,83,.22);
+  --text-dim:#b9c2d2;
+  --text-body:#d8dee9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",sans-serif;
+  background:var(--ink);
+  color:var(--text-body);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{width:min(1120px,92vw);margin:0 auto}
+
+/* ---------- header ---------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,19,32,.9);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.18rem;font-weight:800;letter-spacing:.06em;color:#fff;white-space:nowrap}
+.logo .mark{width:34px;height:34px;flex:none}
+.main-nav{display:flex;gap:26px;font-size:.93rem;color:var(--text-dim)}
+.main-nav a{position:relative;padding:4px 0;transition:color .2s}
+.main-nav a:hover{color:var(--gold-soft)}
+.main-nav a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--gold);transition:width .25s}
+.main-nav a:hover::after{width:100%}
+.header-cta{
+  font-size:.88rem;padding:8px 18px;border-radius:999px;
+  background:var(--gold);color:#1a1206;font-weight:700;white-space:nowrap;
+  transition:transform .2s,box-shadow .2s;
+}
+.header-cta:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(232,180,83,.28)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  padding:72px 0 64px;
+  background:
+    radial-gradient(900px 420px at 82% -10%,rgba(232,180,83,.16),transparent 65%),
+    radial-gradient(600px 360px at 8% 110%,rgba(74,110,180,.20),transparent 70%),
+    var(--ink);
+  border-bottom:1px solid var(--line);
+}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero .kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.8rem;letter-spacing:.18em;color:var(--gold);
+  border:1px solid var(--line);border-radius:999px;padding:6px 14px;margin-bottom:22px;
+}
+.hero h1{
+  font-size:clamp(2.1rem,4.6vw,3.4rem);
+  line-height:1.2;font-weight:800;color:#fff;letter-spacing:.04em;margin-bottom:18px;
+}
+.hero h1 span{color:var(--gold)}
+.hero p.lead{font-size:1.02rem;color:var(--text-dim);max-width:34em;margin-bottom:30px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:30px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--gold);color:#1a1206;font-weight:700;
+  padding:13px 28px;border-radius:10px;font-size:.96rem;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(232,180,83,.3)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line);color:var(--gold-soft);
+  padding:13px 26px;border-radius:10px;font-size:.96rem;
+  transition:background .2s,border-color .2s;
+}
+.btn-ghost:hover{background:rgba(232,180,83,.08);border-color:var(--gold)}
+.hero-stats{display:flex;gap:32px;flex-wrap:wrap}
+.hero-stats div strong{display:block;font-size:1.35rem;color:var(--gold-soft);font-weight:800;letter-spacing:.02em}
+.hero-stats div span{font-size:.82rem;color:#8d97a8}
+
+/* hero visual */
+.hero-visual{position:relative}
+.poster-stack{position:relative;height:340px}
+.poster{
+  position:absolute;border-radius:14px;overflow:hidden;
+  border:1px solid rgba(232,180,83,.3);
+  box-shadow:0 22px 48px rgba(0,0,0,.55);
+}
+.poster.p1{width:62%;height:88%;left:0;top:6%;transform:rotate(-4deg);z-index:1}
+.poster.p2{width:56%;height:80%;right:0;top:0;transform:rotate(5deg);z-index:2}
+.poster .bar{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:10px 12px;font-size:.72rem;color:#f3e6c9;
+  background:linear-gradient(transparent,rgba(10,14,24,.92));
+}
+
+/* ---------- section base ---------- */
+section{padding:68px 0}
+.section-head{margin-bottom:36px;max-width:44em}
+.section-head .eyebrow{
+  font-size:.78rem;letter-spacing:.2em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:10px;font-weight:600;
+}
+.section-head h2{font-size:clamp(1.4rem,2.6vw,1.85rem);color:#fff;font-weight:800;line-height:1.35;margin-bottom:12px;letter-spacing:.02em}
+.section-head p{color:var(--text-dim);font-size:.95rem}
+
+/* ---------- finder (search/filter) ---------- */
+.finder{
+  background:var(--ink-2);border:1px solid var(--line);border-radius:16px;
+  padding:26px;margin-bottom:34px;
+}
+.finder-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.finder input[type="search"]{
+  flex:1 1 260px;min-width:0;
+  background:var(--ink);border:1px solid rgba(255,255,255,.12);
+  color:#fff;border-radius:10px;padding:12px 16px;font-size:.95rem;font-family:inherit;
+  outline:none;transition:border-color .2s;
+}
+.finder input[type="search"]:focus{border-color:var(--gold)}
+.finder button{
+  font-family:inherit;cursor:pointer;
+  background:var(--gold);color:#1a1206;border:none;border-radius:10px;
+  padding:12px 24px;font-weight:700;font-size:.93rem;transition:opacity .2s;
+}
+.finder button:hover{opacity:.88}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{
+  font-family:inherit;cursor:pointer;font-size:.82rem;
+  background:transparent;color:var(--text-dim);
+  border:1px solid rgba(255,255,255,.14);border-radius:999px;
+  padding:6px 15px;transition:all .2s;
+}
+.chip:hover{color:var(--gold-soft);border-color:var(--line)}
+.chip.active{background:rgba(232,180,83,.16);color:var(--gold-soft);border-color:var(--gold)}
+.result-hint{font-size:.82rem;color:#8d97a8;margin-top:14px}
+
+/* ---------- card grid ---------- */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{
+  background:var(--ink-2);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .22s,border-color .22s;
+}
+.card:hover{transform:translateY(-4px);border-color:var(--line)}
+.card .thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.card .thumb svg{width:100%;height:100%}
+.card .tag{
+  position:absolute;top:10px;left:10px;
+  font-size:.7rem;letter-spacing:.06em;padding:3px 10px;border-radius:999px;
+  background:rgba(13,19,32,.78);color:var(--gold-soft);border:1px solid var(--line);
+}
+.card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-body h3{font-size:1.02rem;color:#fff;font-weight:700;line-height:1.4}
+.card-body p{font-size:.87rem;color:var(--text-dim);line-height:1.7;flex:1}
+.card-meta{display:flex;gap:12px;font-size:.76rem;color:#8d97a8;border-top:1px solid rgba(255,255,255,.07);padding-top:10px}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{
+  background:linear-gradient(160deg,var(--ink-3),var(--ink-2));
+  border:1px solid var(--line);border-radius:14px;padding:26px 24px;
+}
+.step .num{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(232,180,83,.14);color:var(--gold);font-weight:800;
+  margin-bottom:16px;font-size:.95rem;
+}
+.step h3{font-size:1.02rem;color:#fff;margin-bottom:8px}
+.step p{font-size:.88rem;color:var(--text-dim)}
+
+/* ---------- list section ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start}
+.rank-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+.rank-list li{
+  display:flex;gap:16px;align-items:baseline;
+  padding:14px 4px;border-bottom:1px dashed rgba(255,255,255,.1);
+}
+.rank-list li:last-child{border-bottom:none}
+.rank-list .idx{
+  font-size:.82rem;font-weight:800;color:var(--gold);
+  min-width:26px;font-variant-numeric:tabular-nums;
+}
+.rank-list .name{color:#fff;font-size:.95rem;font-weight:600}
+.rank-list .desc{font-size:.82rem;color:#8d97a8;margin-top:2px}
+
+.note-panel{
+  background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:28px;
+}
+.note-panel h3{color:#fff;font-size:1.05rem;margin-bottom:14px}
+.note-panel p{font-size:.9rem;color:var(--text-dim);margin-bottom:12px}
+.note-panel p:last-child{margin-bottom:0}
+
+/* ---------- faq ---------- */
+.faq{display:flex;flex-direction:column;gap:12px;max-width:52em}
+details{
+  background:var(--ink-2);border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:0 20px;transition:border-color .2s;
+}
+details[open]{border-color:var(--line)}
+summary{
+  cursor:pointer;list-style:none;padding:16px 0;
+  font-size:.96rem;color:#fff;font-weight:600;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:1.2rem;font-weight:400;flex:none}
+details[open] summary::after{content:"−"}
+details p{font-size:.89rem;color:var(--text-dim);padding-bottom:18px}
+
+/* ---------- download strip ---------- */
+.download-strip{
+  background:linear-gradient(120deg,rgba(232,180,83,.13),rgba(74,110,180,.13));
+  border:1px solid var(--line);border-radius:18px;
+  padding:38px 36px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
+}
+.download-strip h2{font-size:1.35rem;color:#fff;margin-bottom:8px;font-weight:800}
+.download-strip p{font-size:.9rem;color:var(--text-dim);max-width:40em}
+.dl-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--gold);color:#1a1206;font-weight:800;
+  padding:14px 34px;border-radius:10px;font-size:.98rem;white-space:nowrap;
+  pointer-events:none;
+}
+.dl-btn[aria-disabled="true"]{opacity:.95;cursor:default}
+
+/* ---------- footer ---------- */
+.site-footer{
+  border-top:1px solid var(--line);background:var(--ink-2);
+  padding:46px 0 30px;margin-top:20px;
+}
+.footer-top{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;margin-bottom:32px}
+.footer-brand{max-width:30em}
+.footer-brand .logo{margin-bottom:12px}
+.footer-brand p{font-size:.85rem;color:#8d97a8}
+.footer-links{display:flex;gap:56px;flex-wrap:wrap}
+.footer-links h4{font-size:.85rem;color:#fff;margin-bottom:12px;letter-spacing:.05em}
+.footer-links ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-links a{font-size:.85rem;color:#8d97a8;transition:color .2s}
+.footer-links a:hover{color:var(--gold-soft)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.07);padding-top:18px;
+  font-size:.78rem;color:#6d778a;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:38px}
+  .hero-visual{max-width:440px}
+  .card-grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:680px){
+  .main-nav{display:none}
+  .hero{padding:48px 0 44px}
+  .hero p.lead{font-size:.95rem}
+  .hero-stats{gap:22px}
+  .hero-stats div strong{font-size:1.15rem}
+  .poster-stack{height:270px}
+  .card-grid{grid-template-columns:1fr}
+  section{padding:48px 0}
+  .finder{padding:20px}
+  .download-strip{padding:28px 22px}
+  .footer-links{gap:36px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto;transition:none!important}
+}
+</style>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="#top" aria-label="奈菲影视首页">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#161f31" stroke="#e8b453" stroke-opacity=".45"/>
+        <path d="M24 18v28l20-14z" fill="#e8b453"/>
+      </svg>
+      <span>奈菲影视</span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="#picker">片单精选</a>
+      <a href="#guide">观看指南</a>
+      <a href="#ranking">热度榜单</a>
+      <a href="#faq">常见问题</a>
+      <a href="#download">下载入口</a>
+    </nav>
+    <a class="header-cta" href="#picker">开始选片</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker">影视推荐 · 片单导航</span>
+        <h1>奈菲影视</h1>
+        <p class="lead">奈菲影视为影视爱好者整理热门剧集、口碑电影与分类片单，用清晰的条目与筛选方式，帮你把“想看点好的”变成一次几分钟内完成的选片。这里是奈菲影视的主题首页，内容重点是片单推荐与观看路径说明。</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#picker">
+            浏览精选片单
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn-ghost" href="#guide">了解观看方式</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>6 类</strong><span>片单主题分类</span></div>
+          <div><strong>3 步</strong><span>选片路径</span></div>
+          <div><strong>每周</strong><span>片单整理节奏</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="poster-stack">
+          <div class="poster p1">
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+              <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22304a"/><stop offset="1" stop-color="#0d1320"/></linearGradient></defs>
+              <rect width="300" height="400" fill="url(#g1)"/>
+              <circle cx="210" cy="110" r="58" fill="#e8b453" opacity=".18"/>
+              <path d="M0 300 Q90 240 160 296 T300 270 V400 H0Z" fill="#1f2b40"/>
+              <path d="M40 340 Q110 300 180 336 T300 320" stroke="#e8b453" stroke-opacity=".35" stroke-width="2" fill="none"/>
+            </svg>
+            <span class="bar">剧集 · 都市与悬疑</span>
+          </div>
+          <div class="poster p2">
+            <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice">
+              <defs><linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2a2440"/><stop offset="1" stop-color="#0d1320"/></linearGradient></defs>
+              <rect width="300" height="400" fill="url(#g2)"/>
+              <rect x="70" y="120" width="160" height="110" rx="10" fill="none" stroke="#e8b453" stroke-opacity=".45" stroke-width="2"/>
+              <path d="M138 152v48l44-24z" fill="#e8b453" opacity=".85"/>
+              <path d="M0 330 Q80 290 150 330 T300 300 V400 H0Z" fill="#1f2b40"/>
+            </svg>
+            <span class="bar">电影 · 剧情与科幻</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PICKER -->
+  <section id="picker">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Curated Picks</div>
+        <h2>奈菲影视精选片单</h2>
+        <p>按主题分类整理的影视条目，每条包含类型、看点与适看场景。你可以用下方检索框或分类标签缩小范围，结果会实时显示在卡片区域。</p>
+      </div>
+
+      <div class="finder">
+        <div class="finder-row">
+          <input type="search" id="pickerSearch" placeholder="搜索片名或关键词，例如：悬疑、科幻、家庭" aria-label="搜索片单">
+          <button type="button" id="pickerReset">重置筛选</button>
+        </div>
+        <div class="chips" role="group" aria-label="片单分类">
+          <button class="chip active" data-cat="all" type="button">全部</button>
+          <button class="chip" data-cat="剧集" type="button">剧集</button>
+          <button class="chip" data-cat="电影" type="button">电影</button>
+          <button class="chip" data-cat="悬疑" type="button">悬疑</button>
+          <button class="chip" data-cat="科幻" type="button">科幻</button>
+          <button class="chip" data-cat="家庭" type="button">家庭</button>
+        </div>
+        <div class="result-hint" id="resultHint">当前显示 6 个片单条目</div>
+      </div>
+
+      <div class="card-grid" id="cardGrid">
+
+        <article class="card" data-cat="剧集 悬疑">
+          <div class="thumb">
+            <span class="tag">剧集</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#233149"/><stop offset="1" stop-color="#101725"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c1)"/>
+              <circle cx="250" cy="52" r="30" fill="#e8b453" opacity=".2"/>
+              <path d="M0 140 Q80 110 160 138 T320 124 V180 H0Z" fill="#1b2638"/>
+              <path d="M40 60 h60 M40 78 h96 M40 96 h44" stroke="#e8b453" stroke-opacity=".4" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>都市悬疑剧集专题</h3>
+            <p>围绕线索推进与人物动机展开的悬疑剧集，适合连续追看。整理时优先保留节奏紧凑、单集信息量充足的作品。</p>
+            <div class="card-meta"><span>适合：连续追剧</span><span>节奏：中快</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="电影 科幻">
+          <div class="thumb">
+            <span class="tag">电影</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#1b2b44"/><stop offset="1" stop-color="#0f1420"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c2)"/>
+              <circle cx="90" cy="90" r="42" fill="none" stroke="#e8b453" stroke-opacity=".45" stroke-width="2"/>
+              <ellipse cx="90" cy="90" rx="62" ry="18" fill="none" stroke="#e8b453" stroke-opacity=".28" stroke-width="2"/>
+              <circle cx="238" cy="46" r="3" fill="#e8b453" opacity=".7"/>
+              <circle cx="268" cy="82" r="2" fill="#e8b453" opacity=".5"/>
+              <circle cx="210" cy="118" r="2.5" fill="#e8b453" opacity=".6"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>科幻电影长片推荐</h3>
+            <p>以世界观设定与视觉表达为核心的科幻电影，单部观看即可完整体验，适合周末一次性看完。</p>
+            <div class="card-meta"><span>适合：周末单片</span><span>时长：长片</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="剧集 家庭">
+          <div class="thumb">
+            <span class="tag">剧集</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2a3f"/><stop offset="1" stop-color="#101725"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c3)"/>
+              <path d="M60 120 L110 78 L150 104 L200 64 L260 96" stroke="#e8b453" stroke-opacity=".45" stroke-width="3" fill="none" stroke-linejoin="round"/>
+              <rect x="60" y="132" width="200" height="3" rx="1.5" fill="#e8b453" opacity=".25"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>家庭题材温情剧集</h3>
+            <p>聚焦家庭成员关系与日常生活的剧集，情绪曲线平缓，适合与家人一起观看或作为睡前放松内容。</p>
+            <div class="card-meta"><span>适合：合家观看</span><span>情绪：温和</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="电影 悬疑">
+          <div class="thumb">
+            <span class="tag">电影</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c4" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#202a3e"/><stop offset="1" stop-color="#0d1320"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c4)"/>
+              <circle cx="160" cy="90" r="46" fill="none" stroke="#e8b453" stroke-opacity=".4" stroke-width="2"/>
+              <path d="M160 44 v92 M114 90 h92" stroke="#e8b453" stroke-opacity=".22" stroke-width="2"/>
+              <circle cx="160" cy="90" r="8" fill="#e8b453" opacity=".55"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>高完成度悬疑电影</h3>
+            <p>结构完整、结尾收束有力的悬疑电影。整理时更关注叙事逻辑是否自洽，而非单纯依靠反转堆叠。</p>
+            <div class="card-meta"><span>适合：专注观看</span><span>要素：逻辑</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="剧集">
+          <div class="thumb">
+            <span class="tag">剧集</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c5" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#243047"/><stop offset="1" stop-color="#0e1522"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c5)"/>
+              <rect x="52" y="52" width="216" height="76" rx="8" fill="none" stroke="#e8b453" stroke-opacity=".35" stroke-width="2"/>
+              <path d="M146 76 v28 l24-14z" fill="#e8b453" opacity=".7"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>短剧集入门清单</h3>
+            <p>集数少、篇幅短的剧集，适合刚开始追剧或时间有限的观众，用较少时间了解一个完整故事。</p>
+            <div class="card-meta"><span>适合：碎片时间</span><span>篇幅：短</span></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="电影">
+          <div class="thumb">
+            <span class="tag">电影</span>
+            <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs><linearGradient id="c6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a3348"/><stop offset="1" stop-color="#0d1320"/></linearGradient></defs>
+              <rect width="320" height="180" fill="url(#c6)"/>
+              <path d="M0 128 Q70 96 140 126 T320 112 V180 H0Z" fill="#1b2638"/>
+              <circle cx="72" cy="56" r="22" fill="#e8b453" opacity=".22"/>
+              <path d="M40 150 h80 M40 162 h140" stroke="#e8b453" stroke-opacity=".28" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>经典片单回顾</h3>
+            <p>值得重温的经典电影条目，适合按主题成组观看，也方便作为观影入门的参考顺序。</p>
+            <div class="card-meta"><span>适合：主题观看</span><span>属性：经典</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDE -->
+  <section id="guide">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">How To Watch</div>
+        <h2>在奈菲影视找到想看的片子</h2>
+        <p>选片不需要复杂的步骤。把一次访问拆成三个动作，先明确类型，再确认单部作品的信息，最后进入观看环节。</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">01</div>
+          <h3>按类型或关键词定位</h3>
+          <p>在片单检索区输入片名、题材关键词，或直接点击分类标签。悬疑、科幻、家庭、剧集、电影等标签可以组合缩小结果，避免在大量条目中反复翻找。</p>
+        </div>
+        <div class="step">
+          <div class="num">02</div>
+          <h3>看条目信息再决定</h3>
+          <p>每个条目都标注了类型、适看场景与节奏说明。先判断它是否符合你此刻的需求，比如能否连续追看、是否适合与家人一起看，再决定是否加入待看。</p>
+        </div>
+        <div class="step">
+          <div class="num">03</div>
+          <h3>记录并安排观看</h3>
+          <p>把选中的作品记入个人待看列表，按周末长片、工作日短剧集分开安排。奈菲影视的片单结构适合反复回看，也便于之后补充新的条目。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RANKING + NOTES -->
+  <section id="ranking">
+    <div class="wrap split">
+      <div>
+        <div class="section-head">
+          <div class="eyebrow">This Week</div>
+          <h2>本周片单整理方向</h2>
+          <p>以下为奈菲影视本周片单的整理侧重，按访问需求排序，不代表播放量统计。</p>
+        </div>
+        <ol class="rank-list">
+          <li>
+            <span class="idx">01</span>
+            <div>
+              <div class="name">悬疑与推理剧集</div>
+              <div class="desc">线索清晰、单集推进明确的作品优先，适合连续追看。</div>
+            </div>
+          </li>
+          <li>
+            <span class="idx">02</span>
+            <div>
+              <div class="name">科幻电影长片</div>
+              <div class="desc">世界观完整、视觉表达有辨识度的单片，适合周末集中观看。</div>
+            </div>
+          </li>
+          <li>
+            <span class="idx">03</span>
+            <div>
+              <div class="name">家庭温情剧集</div>
+              <div class="desc">节奏平缓、情绪温和，适合多人一起观看或作为放松内容。</div>
+            </div>
+          </li>
+          <li>
+            <span class="idx">04</span>
+            <div>
+              <div class="name">短剧集入门清单</div>
+              <div class="desc">集数少、故事完整，适合时间有限但想完整体验一部剧的观众。</div>
+            </div>
+          </li>
+          <li>
+            <span class="idx">05</span>
+            <div>
+              <div class="name">经典电影回顾</div>
+              <div class="desc">按主题成组整理，便于建立自己的观影顺序与参考坐标。</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div>
+        <div class="note-panel">
+          <h3>关于片单整理标准</h3>
+          <p>奈菲影视的片单以“能否帮访问者快速做决定”为整理标准，因此每个条目都会说明类型、适看场景与观看方式，而不仅列出片名。</p>
+          <p>条目信息以剧集和电影本身的公开类型、篇幅与叙事特点为依据，不涉及具体播放数据。页面中的分类与排序反映的是整理侧重点，方便你按需检索。</p>
+          <p>片单会按周更新整理方向，新增条目优先补充在对应主题分类下。若某一分类长期没有合适的条目，会保持原样而不强行填充，以保证推荐结果的参考价值。</p>
+          <p>如果只是想随便看看，可以从“全部”分类开始浏览，或直接使用检索框输入你最近感兴趣的题材词。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2>奈菲影视常见问题</h2>
+        <p>关于片单检索、分类方式与观看安排的高频疑问，集中整理如下。</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>奈菲影视的片单是怎么分类的？</summary>
+          <p>目前按剧集、电影两个大类和悬疑、科幻、家庭等题材标签交叉分类。你可以先选大类，再用标签进一步缩小范围，检索框支持片名与关键词匹配。</p>
+        </details>
+        <details>
+          <summary>如何快速找到适合与家人一起看的内容？</summary>
+          <p>选择“家庭”标签即可。该分类下的条目在整理时会优先保留情绪温和、节奏平缓的作品，卡片中也标注了适看场景，便于快速判断。</p>
+        </details>
+        <details>
+          <summary>片单多久更新一次？</summary>
+          <p>页面按周更新整理方向与新增条目，新增内容会补充在对应分类下。更新侧重会随访问需求调整，例如近期集中补充悬疑或科幻题材。</p>
+        </details>
+        <details>
+          <summary>页面上的条目信息包含播放地址吗？</summary>
+          <p>当前页面提供的是片单推荐与观看路径说明，条目信息侧重类型、适度场景与篇幅。实际观看入口以你使用的影视平台为准，页面不承诺具体片源的可用性。</p>
+        </details>
+        <details>
+          <summary>可以按自己的喜好自定义筛选吗？</summary>
+          <p>可以使用检索框输入任意题材关键词，配合分类标签组合筛选。筛选结果会即时显示在卡片区域，点击“重置筛选”可恢复全部条目。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download">
+    <div class="wrap">
+      <div class="download-strip">
+        <div>
+          <h2>下载奈菲影视片单速查表</h2>
+          <p>把本周精选片单与分类标签整理成一页速查表，方便离线查看。当前版本整理完成后会在此处提供下载，请关注页面更新。</p>
+        </div>
+        <a class="dl-btn" href="#" data-download-placeholder="true" aria-disabled="true" tabindex="-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg>
+          下载
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="#top" aria-label="返回奈菲影视首页">
+          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+            <rect width="64" height="64" rx="14" fill="#161f31" stroke="#e8b453" stroke-opacity=".45"/>
+            <path d="M24 18v28l20-14z" fill="#e8b453"/>
+          </svg>
+          <span>奈菲影视</span>
+        </a>
+        <p>奈菲影视是影视片单推荐与观看路径说明的主题页面，围绕剧集、电影与题材分类整理条目，帮助访问者更快完成选片与观看安排。</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h4>浏览</h4>
+          <ul>
+            <li><a href="#picker">精选片单</a></li>
+            <li><a href="#ranking">本周整理</a></li>
+            <li><a href="#guide">观看指南</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>帮助</h4>
+          <ul>
+            <li><a href="#faq">常见问题</a></li>
+            <li><a href="#download">下载入口</a></li>
+            <li><a href="#top">返回顶部</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 奈菲影视 · 片单推荐与导航</span>
+      <span>条目信息以公开类型与篇幅特点为依据整理</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var grid = document.getElementById('cardGrid');
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+  var search = document.getElementById('pickerSearch');
+  var reset = document.getElementById('pickerReset');
+  var hint = document.getElementById('resultHint');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var activeCat = 'all';
+
+  function apply(){
+    var q = (search.value || '').trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function(card){
+      var cats = card.getAttribute('data-cat') || '';
+      var text = card.textContent.toLowerCase();
+      var catOk = activeCat === 'all' || cats.indexOf(activeCat) !== -1;
+      var qOk = !q || text.indexOf(q) !== -1;
+      var ok = catOk && qOk;
+      card.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    hint.textContent = '当前显示 ' + shown + ' 个片单条目';
+  }
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      activeCat = chip.getAttribute('data-cat');
+      apply();
+    });
+  });
+
+  search.addEventListener('input', apply);
+  reset.addEventListener('click', function(){
+    search.value = '';
+    activeCat = 'all';
+    chips.forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-cat') === 'all'); });
+    apply();
+  });
+
+  apply();
+})();
+</script>
+</body>
+  </html>
